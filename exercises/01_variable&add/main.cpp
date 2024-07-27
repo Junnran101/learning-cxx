@@ -1,10 +1,13 @@
 #include "../exercise.h"
 
-// READ: è¿ç®—ç¬¦ <https://zh.cppreference.com/w/cpp/language/expressions#.E8.BF.90.E7.AE.97.E7.AC.A6>
+// READ: è¿ç®—ç¬?<https://zh.cppreference.com/w/cpp/language/expressions#.E8.BF.90.E7.AE.97.E7.AC.A6>
 
 int main(int argc, char **argv) {
-    // TODO: è¡¥å…¨å˜é‡å®šä¹‰å¹¶æ‰“å°åŠ æ³•è¿ç®—
-    // x ?
-    std::cout << x << " + " << x << " = " << x + x << std::endl;
-    return 0;
+	// ¶¨Òå±äÁ¿ x£¬²¢¸øËüÒ»¸öÖµ
+	int x = 5; // Äã¿ÉÒÔ¸ù¾İĞèÒªÑ¡Ôñ²»Í¬µÄÖµ
+
+	// ´òÓ¡¼Ó·¨ÔËËã
+	std::cout << x << " + " << x << " = " << x + x << std::endl;
+
+	return 0;
 }
