@@ -1,26 +1,36 @@
 #include "../exercise.h"
+#include <iostream>
 
 // READ: Trivial type <https://learn.microsoft.com/zh-cn/cpp/cpp/trivial-standard-layout-and-pod-types?view=msvc-170>
 
 struct FibonacciCache {
-    unsigned long long cache[16];
-    int cached;
+	unsigned long long cache[16];
+	int cached;
 };
 
-// TODO: å®ç°æ­£ç¡®çš„ç¼“å­˜ä¼˜åŒ–æ–æ³¢é‚£å¥‘è®¡ç®—
+// TODO: ÊµÏÖÕıÈ·µÄ»º´æÓÅ»¯ì³²¨ÄÇÆõ¼ÆËã
 static unsigned long long fibonacci(FibonacciCache &cache, int i) {
-    for (; false; ++cached) {
-        cache[cached] = cache[cached - 1] + cache[cached - 2];
-    }
-    return cache.cache[i];
+	cache.cache[0] = 0;
+	cache.cache[1] = 1;
+	cache.cached = 2;
+
+	if (i < cache.cached) {
+		return cache.cache[i];
+	}
+
+	for (int j = cache.cached; j <= i; ++j) {
+		cache.cache[j] = cache.cache[j - 1] + cache.cache[j - 2];
+	}
+
+	return cache.cache[i];
 }
 
 int main(int argc, char **argv) {
-    // TODO: åˆå§‹åŒ–ç¼“å­˜ç»“æ„ä½“ï¼Œä½¿è®¡ç®—æ­£ç¡®
-    // NOTICE: C/C++ ä¸­ï¼Œè¯»å–æœªåˆå§‹åŒ–çš„å˜é‡ï¼ˆåŒ…æ‹¬ç»“æ„ä½“å˜é‡ï¼‰æ˜¯æœªå®šä¹‰è¡Œä¸º
-    // READ: åˆå§‹åŒ–çš„å„ç§å†™æ³• <https://zh.cppreference.com/w/cpp/language/initialization>
-    FibonacciCache fib;
-    ASSERT(fibonacci(fib, 10) == 55, "fibonacci(10) should be 55");
-    std::cout << "fibonacci(10) = " << fibonacci(fib, 10) << std::endl;
-    return 0;
+	// TODO: ³õÊ¼»¯»º´æ½á¹¹Ìå£¬Ê¹¼ÆËãÕıÈ·
+	// NOTICE: C/C++ ÖĞ£¬¶ÁÈ¡Î´³õÊ¼»¯µÄ±äÁ¿£¨°üÀ¨½á¹¹Ìå±äÁ¿£©ÊÇÎ´¶¨ÒåĞĞÎª
+	// READ: ³õÊ¼»¯µÄ¸÷ÖÖĞ´·¨ <https://zh.cppreference.com/w/cpp/language/initialization>
+	FibonacciCache fib;
+	ASSERT(fibonacci(fib, 10) == 55, "fibonacci(10) should be 55");
+	std::cout << "fibonacci(10) = " << fibonacci(fib, 10) << std::endl;
+	return 0;
 }

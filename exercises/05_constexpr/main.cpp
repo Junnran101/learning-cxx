@@ -1,26 +1,27 @@
 #include "../exercise.h"
 
+#include <iostream>
+#include <array>
+
 constexpr unsigned long long fibonacci(int i) {
-    switch (i) {
-        case 0:
-            return 0;
-        case 1:
-            return 1;
-        default:
-            return fibonacci(i - 1) + fibonacci(i - 2);
-    }
+	std::array<unsigned long long, 91> fib = {0};  // 91 “‘±„¥Ê¥¢ fibonacci(90)
+	fib[1] = 1;
+	for (int j = 2; j <= i; ++j) {
+		fib[j] = fib[j - 1] + fib[j - 2];
+	}
+	return fib[i];
 }
 
 int main(int argc, char **argv) {
-    constexpr auto FIB20 = fibonacci(20);
-    ASSERT(FIB20 == 6765, "fibonacci(20) should be 6765");
-    std::cout << "fibonacci(20) = " << FIB20 << std::endl;
+	constexpr auto FIB20 = fibonacci(20);
+	ASSERT(FIB20 == 6765, "fibonacci(20) should be 6765");
+	std::cout << "fibonacci(20) = " << FIB20 << std::endl;
 
-    // TODO: ËßÇÂØüÈîôËØØ‰ø°ÊÅØÔºå‰øÆÊîπ‰∏ÄÂ§ÑÔºå‰Ωø‰ª£Á†ÅÁºñËØëËøêË°å
-    // PS: ÁºñËØëËøêË°åÔºå‰ΩÜÊòØ‰∏ç‰∏ÄÂÆöËÉΩÁÆóÂá∫ÁªìÊûú‚Ä¶‚Ä¶
-    constexpr auto ANS_N = 90;
-    constexpr auto ANS = fibonacci(ANS_N);
-    std::cout << "fibonacci(" << ANS_N << ") = " << ANS << std::endl;
+	// TODO: π€≤Ï¥ÌŒÛ–≈œ¢£¨–ﬁ∏ƒ“ª¥¶£¨ π¥˙¬Î±‡“Î‘À––
+	// PS: ±‡“Î‘À––£¨µ´ «≤ª“ª∂®ƒ‹À„≥ˆΩ·π˚°≠°≠
+	constexpr auto ANS_N = 90;
+	constexpr auto ANS = fibonacci(ANS_N);
+	std::cout << "fibonacci(" << ANS_N << ") = " << ANS << std::endl;
 
-    return 0;
+	return 0;
 }

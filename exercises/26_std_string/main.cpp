@@ -1,18 +1,18 @@
-ï»¿#include "../exercise.h"
+#include "../exercise.h"
 #include <string>
 
-// READ: å­—ç¬¦ä¸² <https://zh.cppreference.com/w/cpp/string/basic_string>
+// READ: ×Ö·û´® <https://zh.cppreference.com/w/cpp/string/basic_string>
 
 int main(int argc, char **argv) {
-    // READ: å­—ç¬¦ä¸²å­—é¢é‡ <https://zh.cppreference.com/w/cpp/string/basic_string/operator%22%22s>
-    using namespace std::string_literals;
-    auto hello = "Hello"s;
-    auto world = "world";
-    // READ: `decltype` è¡¨è¾¾å¼ <https://zh.cppreference.com/w/cpp/language/decltype>
-    // READ: `std::is_same_v` å…ƒç¼–ç¨‹åˆ¤åˆ« <https://zh.cppreference.com/w/cpp/types/is_same>
-    ASSERT((std::is_same_v<decltype(hello), ?>), "Fill in the missing type.");
-    ASSERT((std::is_same_v<decltype(world), ?>), "Fill in the missing type.");
-    // TODO: å°† `?` æ›¿æ¢ä¸ºæ­£ç¡®çš„å­—ç¬¦ä¸²
-    ASSERT(hello + ", " + world + '!' == "?", "Fill in the missing string.");
-    return 0;
+	// READ: ×Ö·û´®×ÖÃæÁ¿ <https://zh.cppreference.com/w/cpp/string/basic_string/operator%22%22s>
+	using namespace std::string_literals;
+	auto hello = "Hello"s;
+	auto world = "world";
+	// READ: `decltype` ±í´ïÊ½ <https://zh.cppreference.com/w/cpp/language/decltype>
+	// READ: `std::is_same_v` Ôª±à³ÌÅĞ±ğ <https://zh.cppreference.com/w/cpp/types/is_same>
+	ASSERT((std::is_same_v<decltype(hello), std::string>), "Fill in the missing type.");
+	ASSERT((std::is_same_v<decltype(world), const char *>), "Fill in the missing type.");
+	// TODO: ½« `?` Ìæ»»ÎªÕıÈ·µÄ×Ö·û´®
+	ASSERT(hello + ", " + world + '!' == "Hello, world!", "Fill in the missing string.");
+	return 0;
 }

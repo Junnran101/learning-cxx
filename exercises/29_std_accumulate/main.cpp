@@ -1,17 +1,25 @@
-ï»¿#include "../exercise.h"
+#include "../exercise.h"
 #include <numeric>
 
 // READ: `std::accumulate` <https://zh.cppreference.com/w/cpp/algorithm/accumulate>
 
 int main(int argc, char **argv) {
-    using DataType = float;
-    int shape[]{1, 3, 224, 224};
-    // TODO: è°ƒç”¨ `std::accumulate` è®¡ç®—ï¼š
-    //       - æ•°æ®ç±»å‹ä¸º floatï¼›
-    //       - å½¢çŠ¶ä¸º shapeï¼›
-    //       - è¿ç»­å­˜å‚¨ï¼›
-    //       çš„å¼ é‡å ç”¨çš„å­—èŠ‚æ•°
-    // int size =
-    ASSERT(size == 602112, "4x1x3x224x224 = 602112");
-    return 0;
+	using DataType = float;
+	int shape[] {1, 3, 224, 224};
+	// TODO: µ÷ÓÃ `std::accumulate` ¼ÆËã£º
+	//       - Êı¾İÀàĞÍÎª float£»
+	//       - ĞÎ×´Îª shape£»
+	//       - Á¬Ğø´æ´¢£»
+	//       µÄÕÅÁ¿Õ¼ÓÃµÄ×Ö½ÚÊı
+	// int size =
+
+
+	int num_elements = std::accumulate(std::begin(shape), std::end(shape), 1, std::multiplies<int>());
+
+	int element_size = sizeof(DataType);
+
+	int size = num_elements * element_size;
+
+	ASSERT(size == 602112, "4x1x3x224x224 = 602112");
+	return 0;
 }

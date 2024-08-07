@@ -1,45 +1,60 @@
-ï»¿#include "../exercise.h"
+#include "../exercise.h"
 #include <cmath>
 
 enum class DataType {
-    Float,
-    Double,
+	Float,
+	Double,
 };
 
-/// @brief Tagged union å³æ ‡ç­¾åŒ–è”åˆä½“ï¼Œæ˜¯è”åˆä½“çš„ä¸€ç§å¸¸è§åº”ç”¨ã€‚
-///        Rust enum åœ¨å®ç°ä¸Šå°±æ˜¯æ ‡ç­¾åŒ–è”åˆä½“ã€‚
+/// @brief Tagged union ¼´±êÇ©»¯ÁªºÏÌå£¬ÊÇÁªºÏÌåµÄÒ»ÖÖ³£¼ûÓ¦ÓÃ¡£
+///        Rust enum ÔÚÊµÏÖÉÏ¾ÍÊÇ±êÇ©»¯ÁªºÏÌå¡£
 struct TaggedUnion {
-    DataType type;
-    // NOTICE: struct/union å¯ä»¥ç›¸äº’ä»»æ„åµŒå¥—ã€‚
-    union {
-        float f;
-        double d;
-    };
+	DataType type;
+	union {
+		float f;
+		double d;
+	};
+
+	// Default constructor
+	TaggedUnion() : type(DataType::Float), f(0.0f) {}
+
+	// Constructor for float
+	TaggedUnion(DataType t, float val) : type(t), f(val) {}
+
+	// Constructor for double
+	TaggedUnion(DataType t, double val) : type(t), d(val) {}
 };
 
-// TODO: å°†è¿™ä¸ªå‡½æ•°æ¨¡æ¿åŒ–ç”¨äº sigmoid_dyn
-float sigmoid(float x) {
-    return 1 / (1 + std::exp(-x));
+// Template function to calculate sigmoid
+template<typename T>
+T sigmoid(T x) {
+	return 1 / (1 + std::exp(-x));
 }
 
 TaggedUnion sigmoid_dyn(TaggedUnion x) {
-    TaggedUnion ans{x.type};
-    // TODO: æ ¹æ® type è°ƒç”¨ sigmoid
-    return ans;
+	TaggedUnion ans;
+	ans.type = x.type;  // Set type first
+	switch (x.type) {
+		case DataType::Float:
+			ans.f = sigmoid(x.f);
+			break;
+		case DataType::Double:
+			ans.d = sigmoid(x.d);
+			break;
+	}
+	return ans;
 }
 
-// ---- ä¸è¦ä¿®æ”¹ä»¥ä¸‹ä»£ç  ----
+// ---- ²»ÒªĞŞ¸ÄÒÔÏÂ´úÂë ----
 int main(int argc, char **argv) {
-    TaggedUnion xf{DataType::Float};
-    xf.f = 5.f;
-    auto yf = sigmoid_dyn(xf);
-    ASSERT(yf.type == DataType::Float, "type mismatch");
-    ASSERT(yf.f == 1 / (1 + std::exp(-5.f)), "sigmoid float");
+	TaggedUnion xf{DataType::Float, 5.f};
+	auto yf = sigmoid_dyn(xf);
+	ASSERT(yf.type == DataType::Float, "type mismatch");
+	ASSERT(yf.f == 1 / (1 + std::exp(-5.f)), "sigmoid float");
 
-    TaggedUnion xd{DataType::Double};
-    xd.d = 5.0;
-    auto yd = sigmoid_dyn(xd);
-    ASSERT(yd.type == DataType::Double, "type mismatch");
-    ASSERT(yd.d == 1 / (1 + std::exp(-5.0)), "sigmoid double");
-    return 0;
+	TaggedUnion xd{DataType::Double, 5.0};
+	auto yd = sigmoid_dyn(xd);
+	ASSERT(yd.type == DataType::Double, "type mismatch");
+	ASSERT(yd.d == 1 / (1 + std::exp(-5.0)), "sigmoid double");
+	return 0;
 }

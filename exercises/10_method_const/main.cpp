@@ -1,17 +1,18 @@
 #include "../exercise.h"
 
-// READ: æœ‰ cv é™å®šç¬¦çš„æˆå‘˜å‡½æ•° <https://zh.cppreference.com/w/cpp/language/member_functions>
+// READ: ÓĞ cv ÏŞ¶¨·ûµÄ³ÉÔ±º¯Êı <https://zh.cppreference.com/w/cpp/language/member_functions>
 
 struct Fibonacci {
-    int numbers[11];
-    // TODO: ä¿®æ”¹æ–¹æ³•ç­¾åå’Œå®ç°ï¼Œä½¿æµ‹è¯•é€šè¿‡
-    int get(int i) {
-    }
+	int numbers[11];
+	// TODO: ĞŞ¸Ä·½·¨Ç©ÃûºÍÊµÏÖ£¬Ê¹²âÊÔÍ¨¹ı
+	int get(int i) const {
+		return numbers[i];
+	}
 };
 
 int main(int argc, char **argv) {
-    Fibonacci constexpr FIB{{0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55}};
-    ASSERT(FIB.get(10) == 55, "fibonacci(10) should be 55");
-    std::cout << "fibonacci(10) = " << FIB.get(10) << std::endl;
-    return 0;
+	Fibonacci constexpr FIB{{0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55}};
+	ASSERT(FIB.get(10) == 55, "fibonacci(10) should be 55");
+	std::cout << "fibonacci(10) = " << FIB.get(10) << std::endl;
+	return 0;
 }

@@ -1,28 +1,30 @@
 #include "../exercise.h"
 
-// TODO: æ”¹æ­£å‡½æ•°å®ç°ï¼Œå®ç°æ­£ç¡®çš„ç¼“å­˜ä¼˜åŒ–æ–æ³¢é‚£å¥‘è®¡ç®—
-// THINk: è¿™ä¸ªå‡½æ•°æ˜¯ä¸€ä¸ªçº¯å‡½æ•°ï¼ˆpure functionï¼‰å—ï¼Ÿ
-// READ: çº¯å‡½æ•° <https://zh.wikipedia.org/wiki/%E7%BA%AF%E5%87%BD%E6%95%B0>
+// TODO: ¸ÄÕıº¯ÊıÊµÏÖ£¬ÊµÏÖÕıÈ·µÄ»º´æÓÅ»¯ì³²¨ÄÇÆõ¼ÆËã
+// THINk: Õâ¸öº¯ÊıÊÇÒ»¸ö´¿º¯Êı£¨pure function£©Âğ£¿
+// READ: ´¿º¯Êı <https://zh.wikipedia.org/wiki/%E7%BA%AF%E5%87%BD%E6%95%B0>
 static unsigned long long fibonacci(int i) {
-    // TODO: ä¸ºç¼“å­˜è®¾ç½®æ­£ç¡®çš„åˆå§‹å€¼
-    static unsigned long long cache[96], cached;
-    // TODO: è®¾ç½®æ­£ç¡®çš„å¾ªç¯æ¡ä»¶
-    for (; false; ++cached) {
-        cache[cached] = cache[cached - 1] + cache[cached - 2];
-    }
-    return cache[i];
+	// TODO: Îª»º´æÉèÖÃÕıÈ·µÄ³õÊ¼Öµ
+	static unsigned long long cache[96], cached;
+	// TODO: ÉèÖÃÕıÈ·µÄÑ­»·Ìõ¼ş
+	cache[0] = 0;
+	cache[1] = 1;
+	for (cached = 2; cached < 96; ++cached) {
+		cache[cached] = cache[cached - 1] + cache[cached - 2];
+	}
+	return cache[i];
 }
 
-// ---- ä¸è¦ä¿®æ”¹ä»¥ä¸‹ä»£ç  ----
+// ---- ²»ÒªĞŞ¸ÄÒÔÏÂ´úÂë ----
 int main(int argc, char **argv) {
-    ASSERT(fibonacci(0) == 0, "fibonacci(0) should be 0");
-    ASSERT(fibonacci(1) == 1, "fibonacci(1) should be 1");
-    ASSERT(fibonacci(2) == 1, "fibonacci(2) should be 1");
-    ASSERT(fibonacci(3) == 2, "fibonacci(3) should be 2");
-    ASSERT(fibonacci(10) == 55, "fibonacci(10) should be 55");
+	ASSERT(fibonacci(0) == 0, "fibonacci(0) should be 0");
+	ASSERT(fibonacci(1) == 1, "fibonacci(1) should be 1");
+	ASSERT(fibonacci(2) == 1, "fibonacci(2) should be 1");
+	ASSERT(fibonacci(3) == 2, "fibonacci(3) should be 2");
+	ASSERT(fibonacci(10) == 55, "fibonacci(10) should be 55");
 
-    auto fib90 = fibonacci(90);
-    std::cout << "fibonacci(90) = " << fib90 << std::endl;
-    ASSERT(fib90 == 2880067194370816120, "fibonacci(90) should be 2880067194370816120");
-    return 0;
+	auto fib90 = fibonacci(90);
+	std::cout << "fibonacci(90) = " << fib90 << std::endl;
+	ASSERT(fib90 == 2880067194370816120, "fibonacci(90) should be 2880067194370816120");
+	return 0;
 }

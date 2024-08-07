@@ -1,20 +1,35 @@
-ï»¿#include "../exercise.h"
+#include "../exercise.h"
+#include <cmath>
 
-// READ: å‡½æ•°æ¨¡æ¿ <https://zh.cppreference.com/w/cpp/language/function_template>
-// TODO: å°†è¿™ä¸ªå‡½æ•°æ¨¡æ¿åŒ–
-int plus(int a, int b) {
-    return a + b;
+// READ: º¯ÊıÄ£°å <https://zh.cppreference.com/w/cpp/language/function_template>
+// TODO: ½«Õâ¸öº¯ÊıÄ£°å»¯
+template<typename T>
+T plus(T a, T b) {
+	return a + b;
+}
+
+template<typename T>
+bool areAlmostEqual(T a, T b, T epsilon = static_cast<T>(1e-10)) {
+	return std::fabs(a - b) < epsilon;
+}
+
+template<typename T>
+typename std::enable_if<std::is_floating_point<T>::value, bool>::type
+ams(T a, T b, T epsilon = static_cast<T>(1e-10)) {
+	return std::fabs(a - b) < epsilon;
 }
 
 int main(int argc, char **argv) {
-    ASSERT(plus(1, 2) == 3, "Plus two int");
-    ASSERT(plus(1u, 2u) == 3u, "Plus two unsigned int");
+	float f_a = plus(1.25f, 2.5f);
+	double f_b = plus(1.25, 2.5);
+	ASSERT(plus(1, 2) == 3, "Plus two int");
+	ASSERT(plus(1u, 2u) == 3u, "Plus two unsigned int");
 
-    // THINK: æµ®ç‚¹æ•°ä½•æ—¶å¯ä»¥åˆ¤æ–­ ==ï¼Ÿä½•æ—¶å¿…é¡»åˆ¤æ–­å·®å€¼ï¼Ÿ
-    ASSERT(plus(1.25f, 2.5f) == 3.75f, "Plus two float");
-    ASSERT(plus(1.25, 2.5) == 3.75, "Plus two double");
-    // TODO: ä¿®æ”¹åˆ¤æ–­æ¡ä»¶ä½¿æµ‹è¯•é€šè¿‡
-    ASSERT(plus(0.1, 0.2) == 0.3, "How to make this pass?");
+	// THINK: ¸¡µãÊıºÎÊ±¿ÉÒÔÅĞ¶Ï ==£¿ºÎÊ±±ØĞëÅĞ¶Ï²îÖµ£¿
+	ASSERT(areAlmostEqual(f_a, 3.75f), "Plus two float");
+	ASSERT(areAlmostEqual(f_b, 3.75), "Plus two double");
+	// TODO: ĞŞ¸ÄÅĞ¶ÏÌõ¼şÊ¹²âÊÔÍ¨¹ı
+	ASSERT(ams(plus(0.1, 0.2), 0.3), "How to make this pass?");
 
-    return 0;
+	return 0;
 }

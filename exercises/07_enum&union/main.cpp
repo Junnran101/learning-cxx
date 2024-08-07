@@ -1,50 +1,50 @@
 #include "../exercise.h"
 
-// READ: æšä¸¾ç±»å‹ <https://zh.cppreference.com/w/cpp/language/enum>
+// READ: Ã¶¾ÙÀàĞÍ <https://zh.cppreference.com/w/cpp/language/enum>
 
-// `enum` æ˜¯ C çš„å…¼å®¹ç±»å‹ï¼Œæœ¬è´¨ä¸Šå…¶å¯¹åº”ç±»å‹çš„å¸¸é‡ã€‚
-// åœ¨ `enum` ä¸­å®šä¹‰æ ‡è¯†ç¬¦ç­‰ä»·äºå®šä¹‰ constexpr å¸¸é‡ï¼Œ
-// è¿™äº›æ ‡è¯†ç¬¦ä¸éœ€è¦å‰ç¼€ï¼Œå¯ä»¥ç›´æ¥å¼•ç”¨ã€‚
-// å› æ­¤ `enum` å®šä¹‰ä¼šæ±¡æŸ“å‘½åç©ºé—´ã€‚
+// `enum` ÊÇ C µÄ¼æÈİÀàĞÍ£¬±¾ÖÊÉÏÆä¶ÔÓ¦ÀàĞÍµÄ³£Á¿¡£
+// ÔÚ `enum` ÖĞ¶¨Òå±êÊ¶·ûµÈ¼ÛÓÚ¶¨Òå constexpr ³£Á¿£¬
+// ÕâĞ©±êÊ¶·û²»ĞèÒªÇ°×º£¬¿ÉÒÔÖ±½ÓÒıÓÃ¡£
+// Òò´Ë `enum` ¶¨Òå»áÎÛÈ¾ÃüÃû¿Õ¼ä¡£
 enum ColorEnum : unsigned char {
-    COLOR_RED = 31,
-    COLOR_GREEN,
-    COLOR_YELLOW,
-    COLOR_BLUE,
+	COLOR_RED = 31,
+	COLOR_GREEN,
+	COLOR_YELLOW,
+	COLOR_BLUE,
 };
 
-// æœ‰ä½œç”¨åŸŸæšä¸¾å‹æ˜¯ C++ å¼•å…¥çš„ç±»å‹å®‰å…¨æšä¸¾ã€‚
-// å…¶å†…éƒ¨æ ‡è¯†ç¬¦éœ€è¦å¸¦å‰ç¼€å¼•ç”¨ï¼Œå¦‚ `Color::Red`ã€‚
-// ä½œç”¨åŸŸæšä¸¾å‹å¯ä»¥é¿å…å‘½åç©ºé—´æ±¡æŸ“ï¼Œå¹¶æä¾›ç±»å‹å®‰å…¨ä¿è¯ã€‚
+// ÓĞ×÷ÓÃÓòÃ¶¾ÙĞÍÊÇ C++ ÒıÈëµÄÀàĞÍ°²È«Ã¶¾Ù¡£
+// ÆäÄÚ²¿±êÊ¶·ûĞèÒª´øÇ°×ºÒıÓÃ£¬Èç `Color::Red`¡£
+// ×÷ÓÃÓòÃ¶¾ÙĞÍ¿ÉÒÔ±ÜÃâÃüÃû¿Õ¼äÎÛÈ¾£¬²¢Ìá¹©ÀàĞÍ°²È«±£Ö¤¡£
 enum class Color : int {
-    Red = COLOR_RED,
-    Green,
-    Yellow,
-    Blue,
+	Red = COLOR_RED,
+	Green,
+	Yellow,
+	Blue,
 };
 
 ColorEnum convert_by_pun(Color c) {
-    // READ: <https://zh.cppreference.com/w/cpp/language/union>
-    // `union` è¡¨ç¤ºåœ¨åŒä¸€å†…å­˜ä½ç½®å­˜å‚¨çš„ä¸åŒç±»å‹çš„å€¼ã€‚
-    // å…¶å¸¸è§ç”¨æ³•æ˜¯å®ç°ç±»å‹åŒå…³è½¬æ¢ï¼Œå³å°†ä¸€ç§ç±»å‹çš„å€¼è½¬æ¢ä¸ºå¦ä¸€ç§æ— å…³ç±»å‹çš„å€¼ã€‚
-    // ä½†è¿™ç§å†™æ³•å®é™…ä¸Šä»…åœ¨ C è¯­è¨€è‰¯å®šä¹‰ï¼Œåœ¨ C++ ä¸­æ˜¯æœªå®šä¹‰è¡Œä¸ºã€‚
-    // è¿™æ˜¯æ¯”è¾ƒå°‘è§çš„ C++ ä¸ä¸ C ä¿æŒå…¼å®¹çš„ç‰¹æ€§ã€‚
-    // READ: ç±»å‹åŒå…³ <https://tttapa.github.io/Pages/Programming/Cpp/Practices/type-punning.html>
-    union TypePun {
-        ColorEnum e;
-        Color c;
-    };
+	// READ: <https://zh.cppreference.com/w/cpp/language/union>
+	// `union` ±íÊ¾ÔÚÍ¬Ò»ÄÚ´æÎ»ÖÃ´æ´¢µÄ²»Í¬ÀàĞÍµÄÖµ¡£
+	// Æä³£¼ûÓÃ·¨ÊÇÊµÏÖÀàĞÍË«¹Ø×ª»»£¬¼´½«Ò»ÖÖÀàĞÍµÄÖµ×ª»»ÎªÁíÒ»ÖÖÎŞ¹ØÀàĞÍµÄÖµ¡£
+	// µ«ÕâÖÖĞ´·¨Êµ¼ÊÉÏ½öÔÚ C ÓïÑÔÁ¼¶¨Òå£¬ÔÚ C++ ÖĞÊÇÎ´¶¨ÒåĞĞÎª¡£
+	// ÕâÊÇ±È½ÏÉÙ¼ûµÄ C++ ²»Óë C ±£³Ö¼æÈİµÄÌØĞÔ¡£
+	// READ: ÀàĞÍË«¹Ø <https://tttapa.github.io/Pages/Programming/Cpp/Practices/type-punning.html>
+	union TypePun {
+		ColorEnum e;
+		Color c;
+	};
 
-    TypePun pun;
-    // TODO: è¡¥å…¨ç±»å‹åŒå…³è½¬æ¢
-
-    return pun.e;
+	TypePun pun;
+	// TODO: ²¹È«ÀàĞÍË«¹Ø×ª»»
+	pun.c = c;
+	return pun.e;
 }
 
 int main(int argc, char **argv) {
-    ASSERT(convert_by_pun(Color::Red) == COLOR_RED, "Type punning conversion");
-    ASSERT(convert_by_pun(Color::Green) == COLOR_GREEN, "Type punning conversion");
-    ASSERT(convert_by_pun(Color::Yellow) == COLOR_YELLOW, "Type punning conversion");
-    ASSERT(convert_by_pun(Color::Blue) == COLOR_BLUE, "Type punning conversion");
-    return 0;
+	ASSERT(convert_by_pun(Color::Red) == COLOR_RED, "Type punning conversion");
+	ASSERT(convert_by_pun(Color::Green) == COLOR_GREEN, "Type punning conversion");
+	ASSERT(convert_by_pun(Color::Yellow) == COLOR_YELLOW, "Type punning conversion");
+	ASSERT(convert_by_pun(Color::Blue) == COLOR_BLUE, "Type punning conversion");
+	return 0;
 }

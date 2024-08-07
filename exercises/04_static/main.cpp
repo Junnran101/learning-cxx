@@ -1,19 +1,19 @@
 #include "../exercise.h"
 
-// READ: `static` å…³é”®å­— <https://zh.cppreference.com/w/cpp/language/storage_duration>
-// THINK: è¿™ä¸ªå‡½æ•°çš„ä¸¤ä¸ª `static` å„è‡ªçš„ä½œç”¨æ˜¯ä»€ä¹ˆï¼Ÿ
+// READ: `static` ¹Ø¼ü×Ö <https://zh.cppreference.com/w/cpp/language/storage_duration>
+// THINK: Õâ¸öº¯ÊıµÄÁ½¸ö `static` ¸÷×ÔµÄ×÷ÓÃÊÇÊ²Ã´£¿
 static int func(int param) {
-    static int static_ = param;
-    // std::cout << "static_ = " << static_ << std::endl;
-    return static_++;
+	static int static_ = param;
+	// std::cout << "static_ = " << static_ << std::endl;
+	return static_++;
 }
 
 int main(int argc, char **argv) {
-    // TODO: å°†ä¸‹åˆ— `?` æ›¿æ¢ä¸ºæ­£ç¡®çš„æ•°å­—
-    ASSERT(func(5) == ?, "static variable value incorrect");
-    ASSERT(func(4) == ?, "static variable value incorrect");
-    ASSERT(func(3) == ?, "static variable value incorrect");
-    ASSERT(func(2) == ?, "static variable value incorrect");
-    ASSERT(func(1) == ?, "static variable value incorrect");
-    return 0;
+	// TODO: ½«ÏÂÁĞ `?` Ìæ»»ÎªÕıÈ·µÄÊı×Ö
+	ASSERT(func(5) == 5, "static variable value incorrect");
+	ASSERT(func(4) == 6, "static variable value incorrect");
+	ASSERT(func(3) == 7, "static variable value incorrect");
+	ASSERT(func(2) == 8, "static variable value incorrect");
+	ASSERT(func(1) == 9, "static variable value incorrect");
+	return 0;
 }

@@ -1,35 +1,45 @@
 #include "../exercise.h"
 
-// C++ ä¸­ï¼Œ`class` å’Œ `struct` ä¹‹é—´çš„**å”¯ä¸€åŒºåˆ«**æ˜¯
-// `class` é»˜è®¤è®¿é—®æ§åˆ¶ç¬¦æ˜¯ `private`ï¼Œ
-// `struct` é»˜è®¤è®¿é—®æ§åˆ¶ç¬¦æ˜¯ `public`ã€‚
-// READ: è®¿é—®è¯´æ˜ç¬¦ <https://zh.cppreference.com/w/cpp/language/access>
+// C++ ÖĞ£¬`class` ºÍ `struct` Ö®¼äµÄ**Î¨Ò»Çø±ğ**ÊÇ
+// `class` Ä¬ÈÏ·ÃÎÊ¿ØÖÆ·ûÊÇ `private`£¬
+// `struct` Ä¬ÈÏ·ÃÎÊ¿ØÖÆ·ûÊÇ `public`¡£
+// READ: ·ÃÎÊËµÃ÷·û <https://zh.cppreference.com/w/cpp/language/access>
 
-// è¿™ä¸ª class ä¸­çš„å­—æ®µè¢« private ä¿®é¥°ï¼Œåªèƒ½åœ¨ class å†…éƒ¨è®¿é—®ã€‚
-// å› æ­¤å¿…é¡»æä¾›æ„é€ å™¨æ¥åˆå§‹åŒ–å­—æ®µã€‚
-// READ: æ„é€ å™¨ <https://zh.cppreference.com/w/cpp/language/constructor>
+// Õâ¸ö class ÖĞµÄ×Ö¶Î±» private ĞŞÊÎ£¬Ö»ÄÜÔÚ class ÄÚ²¿·ÃÎÊ¡£
+// Òò´Ë±ØĞëÌá¹©¹¹ÔìÆ÷À´³õÊ¼»¯×Ö¶Î¡£
+// READ: ¹¹ÔìÆ÷ <https://zh.cppreference.com/w/cpp/language/constructor>
 class Fibonacci {
-    size_t cache[16];
-    int cached;
+		size_t cache[16];
+		int cached;
 
-public:
-    // TODO: å®ç°æ„é€ å™¨
-    // Fibonacci()
+	public:
+		// TODO: ÊµÏÖ¹¹ÔìÆ÷
+		// Fibonacci()
+		Fibonacci() {
+			cache[0] = 0;
+			cache[1] = 1;
+			cached = 2;
+		}
 
-    // TODO: å®ç°æ­£ç¡®çš„ç¼“å­˜ä¼˜åŒ–æ–æ³¢é‚£å¥‘è®¡ç®—
-    size_t get(int i) {
-        for (; false; ++cached) {
-            cache[cached] = cache[cached - 1] + cache[cached - 2];
-        }
-        return cache[i];
-    }
+		// TODO: ÊµÏÖÕıÈ·µÄ»º´æÓÅ»¯ì³²¨ÄÇÆõ¼ÆËã
+		size_t get(int i) {
+			if (i < cached) {
+				return cache[i];
+			}
+			for (int j = cached; j <= i && j < 16; ++j) {
+				cache[j] = cache[j - 1] + cache[j - 2];
+			}
+			cached = std::min(i + 1, 16);
+
+			return cache[i];
+		}
 };
 
 int main(int argc, char **argv) {
-    // ç°åœ¨ç±»å‹æ‹¥æœ‰æ— å‚æ„é€ å™¨ï¼Œå£°æ˜æ—¶ä¼šç›´æ¥è°ƒç”¨ã€‚
-    // è¿™ä¸ªå†™æ³•ä¸å†æ˜¯æœªå®šä¹‰è¡Œä¸ºäº†ã€‚
-    Fibonacci fib;
-    ASSERT(fib.get(10) == 55, "fibonacci(10) should be 55");
-    std::cout << "fibonacci(10) = " << fib.get(10) << std::endl;
-    return 0;
+	// ÏÖÔÚÀàĞÍÓµÓĞÎŞ²Î¹¹ÔìÆ÷£¬ÉùÃ÷Ê±»áÖ±½Óµ÷ÓÃ¡£
+	// Õâ¸öĞ´·¨²»ÔÙÊÇÎ´¶¨ÒåĞĞÎªÁË¡£
+	Fibonacci fib;
+	ASSERT(fib.get(10) == 55, "fibonacci(10) should be 55");
+	std::cout << "fibonacci(10) = " << fib.get(10) << std::endl;
+	return 0;
 }

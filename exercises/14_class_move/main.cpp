@@ -1,55 +1,85 @@
 #include "../exercise.h"
 
-// READ: ÁßªÂä®ÊûÑÈÄ†ÂáΩÊï∞ <https://zh.cppreference.com/w/cpp/language/move_constructor>
-// READ: ÁßªÂä®ËµãÂÄº <https://zh.cppreference.com/w/cpp/language/move_assignment>
-// READ: ËøêÁÆóÁ¨¶ÈáçËΩΩ <https://zh.cppreference.com/w/cpp/language/operators>
+// READ: “∆∂Øππ‘Ï∫Ø ˝ <https://zh.cppreference.com/w/cpp/language/move_constructor>
+// READ: “∆∂Ø∏≥÷µ <https://zh.cppreference.com/w/cpp/language/move_assignment>
+// READ: ‘ÀÀ„∑˚÷ÿ‘ÿ <https://zh.cppreference.com/w/cpp/language/operators>
 
 class DynFibonacci {
-    size_t *cache;
-    int cached;
+		size_t *cache;
+		int capacity;
+		int cached;
 
-public:
-    // TODO: ÂÆûÁé∞Âä®ÊÄÅËÆæÁΩÆÂÆπÈáèÁöÑÊûÑÈÄ†Âô®
-    DynFibonacci(int capacity): cache(new ?), cached(?) {}
+	public:
+		// TODO:  µœ÷∂ØÃ¨…Ë÷√»›¡øµƒππ‘Ï∆˜
+		DynFibonacci(int capacity): cache(new size_t[capacity]), capacity(capacity), cached(2) {
+			cache[0] = 0;
+			cache[1] = 1;
+		}
 
-    // TODO: ÂÆûÁé∞ÁßªÂä®ÊûÑÈÄ†Âô®
-    DynFibonacci(DynFibonacci &&other) noexcept = delete;
+		// TODO:  µœ÷“∆∂Øππ‘Ï∆˜
+		DynFibonacci(DynFibonacci &&other) noexcept : cache(other.cache), capacity(other.capacity), cached(other.cached) {
+			other.cache = nullptr;
+		}
 
-    // TODO: ÂÆûÁé∞ÁßªÂä®ËµãÂÄº
-    // NOTICE: ‚ö† Ê≥®ÊÑèÁßªÂä®Âà∞Ëá™Ë∫´ÈóÆÈ¢ò ‚ö†
-    DynFibonacci &operator=(DynFibonacci &&other) noexcept = delete;
+		// TODO:  µœ÷“∆∂Ø∏≥÷µ
+		// NOTICE: ? ◊¢“‚“∆∂ØµΩ◊‘…ÌŒ Ã‚ ?
+		DynFibonacci &operator=(DynFibonacci &&other) noexcept {
+			if (this != &other) {
+				delete[] cache;
 
-    // TODO: ÂÆûÁé∞ÊûêÊûÑÂô®ÔºåÈáäÊîæÁºìÂ≠òÁ©∫Èó¥
-    ~DynFibonacci();
+				cache = other.cache;
+				capacity = other.capacity;
+				cached = other.cached;
 
-    // TODO: ÂÆûÁé∞Ê≠£Á°ÆÁöÑÁºìÂ≠ò‰ºòÂåñÊñêÊ≥¢ÈÇ£Â•ëËÆ°ÁÆó
-    size_t operator[](int i) {
-        for (; false; ++cached) {
-            cache[cached] = cache[cached - 1] + cache[cached - 2];
-        }
-        return cache[i];
-    }
+				other.cache = nullptr;
+			}
+			return *this;
+		}
 
-    // NOTICE: ‰∏çË¶Å‰øÆÊîπËøô‰∏™ÊñπÊ≥ï
-    bool is_alive() const {
-        return cache;
-    }
+		// TODO:  µœ÷Œˆππ∆˜£¨ Õ∑≈ª∫¥Êø’º‰
+		~DynFibonacci() {
+			delete[] cache;
+		}
+
+		// TODO:  µœ÷’˝»∑µƒª∫¥Ê”≈ªØÏ≥≤®ƒ«∆ıº∆À„
+		size_t &operator[](int i) {
+			if (i > cached) {
+				for (int j = cached; j <= i && j < capacity; ++j) {
+					cache[j] = cache[j - 1] + cache[j - 2];
+				}
+				cached = std::min(i + 1, capacity);
+			}
+			return cache[i];
+		}
+
+		size_t operator[](int i) const {
+			if (i >= cached) {
+				// Provide an error message or handle out-of-range access
+				ASSERT(false, "Index out of range for const access");
+			}
+			return cache[i];
+		}
+
+		// NOTICE: ≤ª“™–ﬁ∏ƒ’‚∏ˆ∑Ω∑®
+		bool is_alive() const {
+			return cache != nullptr;
+		}
 };
 
 int main(int argc, char **argv) {
-    DynFibonacci fib(12);
-    ASSERT(fib[10] == 55, "fibonacci(10) should be 55");
+	DynFibonacci fib(12);
+	ASSERT(fib[10] == 55, "fibonacci(10) should be 55");
 
-    DynFibonacci const fib_ = std::move(fib);
-    ASSERT(!fib.is_alive(), "Object moved");
-    ASSERT(fib_[10] == 55, "fibonacci(10) should be 55");
+	DynFibonacci const fib_ = std::move(fib);
+	ASSERT(!fib.is_alive(), "Object moved");
+	ASSERT(fib_[10] == 55, "fibonacci(10) should be 55");
 
-    DynFibonacci fib0(6);
-    DynFibonacci fib1(12);
+	DynFibonacci fib0(6);
+	DynFibonacci fib1(12);
 
-    fib0 = std::move(fib1);
-    fib0 = std::move(fib0);
-    ASSERT(fib0[10] == 55, "fibonacci(10) should be 55");
+	fib0 = std::move(fib1);
+	fib0 = std::move(fib0);
+	ASSERT(fib0[10] == 55, "fibonacci(10) should be 55");
 
-    return 0;
+	return 0;
 }

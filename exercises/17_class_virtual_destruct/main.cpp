@@ -1,65 +1,70 @@
 #include "../exercise.h"
 
-// READ: é™æ€å­—æ®µ <https://zh.cppreference.com/w/cpp/language/static>
-// READ: è™šææ„å‡½æ•° <https://zh.cppreference.com/w/cpp/language/destructor>
+// READ: ¾²Ì¬×Ö¶Î <https://zh.cppreference.com/w/cpp/language/static>
+// READ: ĞéÎö¹¹º¯Êı <https://zh.cppreference.com/w/cpp/language/destructor>
 
 struct A {
-    // TODO: æ­£ç¡®åˆå§‹åŒ–é™æ€å­—æ®µ
-    static int num_a = 0;
+	// TODO: ÕıÈ·³õÊ¼»¯¾²Ì¬×Ö¶Î
+	static int num_a;
 
-    A() {
-        ++num_a;
-    }
-    ~A() {
-        --num_a;
-    }
+	A() {
+		++num_a;
+	}
+	virtual ~A() {
+		--num_a;
+	}
 
-    virtual char name() const {
-        return 'A';
-    }
+	virtual char name() const {
+		return 'A';
+	}
 };
+
+int A::num_a = 0;
+
 struct B final : public A {
-    // TODO: æ­£ç¡®åˆå§‹åŒ–é™æ€å­—æ®µ
-    static int num_b = 0;
+	// TODO: ÕıÈ·³õÊ¼»¯¾²Ì¬×Ö¶Î
+	static int num_b;
 
-    B() {
-        ++num_b;
-    }
-    ~B() {
-        --num_b;
-    }
+	B() {
+		++num_b;
+	}
+	~B() {
+		--num_b;
+	}
 
-    char name() const final {
-        return 'B';
-    }
+	char name() const final {
+		return 'B';
+	}
 };
+
+int B::num_b = 0;
 
 int main(int argc, char **argv) {
-    auto a = new A;
-    auto b = new B;
-    ASSERT(A::num_a == ?, "Fill in the correct value for A::num_a");
-    ASSERT(B::num_b == ?, "Fill in the correct value for B::num_b");
-    ASSERT(a->name() == '?', "Fill in the correct value for a->name()");
-    ASSERT(b->name() == '?', "Fill in the correct value for b->name()");
+	auto a = new A;
+	auto b = new B;
+	ASSERT(A::num_a == 2, "Fill in the correct value for A::num_a");
+	ASSERT(B::num_b == 1, "Fill in the correct value for B::num_b");
+	ASSERT(a->name() == 'A', "Fill in the correct value for a->name()");
+	ASSERT(b->name() == 'B', "Fill in the correct value for b->name()");
 
-    delete a;
-    delete b;
-    ASSERT(A::num_a == 0, "Every A was destroyed");
-    ASSERT(B::num_b == 0, "Every B was destroyed");
+	delete a;
+	delete b;
+	ASSERT(A::num_a == 0, "Every A was destroyed");
+	ASSERT(B::num_b == 0, "Every B was destroyed");
 
-    A *ab = new B;// æ´¾ç”Ÿç±»æŒ‡é’ˆå¯ä»¥éšæ„è½¬æ¢ä¸ºåŸºç±»æŒ‡é’ˆ
-    ASSERT(A::num_a == ?, "Fill in the correct value for A::num_a");
-    ASSERT(B::num_b == ?, "Fill in the correct value for B::num_b");
-    ASSERT(ab->name() == '?', "Fill in the correct value for ab->name()");
+	A *ab = new B;// ÅÉÉúÀàÖ¸Õë¿ÉÒÔËæÒâ×ª»»Îª»ùÀàÖ¸Õë
+	ASSERT(A::num_a == 1, "Fill in the correct value for A::num_a");
+	ASSERT(B::num_b == 1, "Fill in the correct value for B::num_b");
+	ASSERT(ab->name() == 'B', "Fill in the correct value for ab->name()");
 
-    // TODO: åŸºç±»æŒ‡é’ˆæ— æ³•éšæ„è½¬æ¢ä¸ºæ´¾ç”Ÿç±»æŒ‡é’ˆï¼Œè¡¥å…¨æ­£ç¡®çš„è½¬æ¢è¯­å¥
-    B &bb = *ab;
-    ASSERT(bb.name() == '?', "Fill in the correct value for bb->name()");
+	// TODO: »ùÀàÖ¸ÕëÎŞ·¨ËæÒâ×ª»»ÎªÅÉÉúÀàÖ¸Õë£¬²¹È«ÕıÈ·µÄ×ª»»Óï¾ä
+	B &bb = dynamic_cast<B &>(*ab);
+	ASSERT(bb.name() == 'B', "Fill in the correct value for bb->name()");
 
-    // TODO: ---- ä»¥ä¸‹ä»£ç ä¸è¦ä¿®æ”¹ï¼Œé€šè¿‡æ”¹æ­£ç±»å®šä¹‰è§£å†³ç¼–è¯‘é—®é¢˜ ----
-    delete ab;// é€šè¿‡æŒ‡é’ˆå¯ä»¥åˆ é™¤æŒ‡å‘çš„å¯¹è±¡ï¼Œå³ä½¿æ˜¯å¤šæ€å¯¹è±¡
-    ASSERT(A::num_a == 0, "Every A was destroyed");
-    ASSERT(B::num_b == 0, "Every B was destroyed");
+	// TODO: ---- ÒÔÏÂ´úÂë²»ÒªĞŞ¸Ä£¬Í¨¹ı¸ÄÕıÀà¶¨Òå½â¾ö±àÒëÎÊÌâ ----
+	delete ab;// Í¨¹ıÖ¸Õë¿ÉÒÔÉ¾³ıÖ¸ÏòµÄ¶ÔÏó£¬¼´Ê¹ÊÇ¶àÌ¬¶ÔÏó
+	ASSERT(A::num_a == 0, "Every A was destroyed");
+	ASSERT(B::num_b == 0, "Every B was destroyed");
 
-    return 0;
+	return 0;
 }

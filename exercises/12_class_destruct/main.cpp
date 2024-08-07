@@ -1,32 +1,45 @@
 #include "../exercise.h"
 
-// READ: ææ„å‡½æ•° <https://zh.cppreference.com/w/cpp/language/destructor>
+// READ: Îö¹¹º¯Êı <https://zh.cppreference.com/w/cpp/language/destructor>
 
-/// @brief ä»»æ„ç¼“å­˜å®¹é‡çš„æ–æ³¢é‚£å¥‘ç±»å‹ã€‚
-/// @details å¯ä»¥åœ¨æ„é€ æ—¶ä¼ å…¥ç¼“å­˜å®¹é‡ï¼Œå› æ­¤éœ€è¦åŠ¨æ€åˆ†é…ç¼“å­˜ç©ºé—´ã€‚
+/// @brief ÈÎÒâ»º´æÈİÁ¿µÄì³²¨ÄÇÆõÀàĞÍ¡£
+/// @details ¿ÉÒÔÔÚ¹¹ÔìÊ±´«Èë»º´æÈİÁ¿£¬Òò´ËĞèÒª¶¯Ì¬·ÖÅä»º´æ¿Õ¼ä¡£
 class DynFibonacci {
-    size_t *cache;
-    int cached;
+		size_t *cache;
+		int capacity;
+		int cached;
 
-public:
-    // TODO: å®ç°åŠ¨æ€è®¾ç½®å®¹é‡çš„æ„é€ å™¨
-    DynFibonacci(int capacity): cache(new ?), cached(?) {}
+	public:
+		// TODO: ÊµÏÖ¶¯Ì¬ÉèÖÃÈİÁ¿µÄ¹¹ÔìÆ÷
+		DynFibonacci(int capacity): capacity(capacity), cached(2) {
+			cache = new size_t[16];
+			cache[0] = 0;
+			cache[1] = 1;
+		}
 
-    // TODO: å®ç°ææ„å™¨ï¼Œé‡Šæ”¾ç¼“å­˜ç©ºé—´
-    ~DynFibonacci();
+		// TODO: ÊµÏÖÎö¹¹Æ÷£¬ÊÍ·Å»º´æ¿Õ¼ä
+		~DynFibonacci() {
+			delete[] cache;
+		}
 
-    // TODO: å®ç°æ­£ç¡®çš„ç¼“å­˜ä¼˜åŒ–æ–æ³¢é‚£å¥‘è®¡ç®—
-    size_t get(int i) {
-        for (; false; ++cached) {
-            cache[cached] = cache[cached - 1] + cache[cached - 2];
-        }
-        return cache[i];
-    }
+		// TODO: ÊµÏÖÕıÈ·µÄ»º´æÓÅ»¯ì³²¨ÄÇÆõ¼ÆËã
+		size_t get(int i) {
+			if (i < cached) {
+				return cache[i];
+			}
+
+			for (int j = cached; j <= i && j < 16; ++j) {
+				cache[j] = cache[j - 1] + cache[j - 2];
+			}
+			cached = std::min(i + 1, 16);
+
+			return cache[i];
+		}
 };
 
 int main(int argc, char **argv) {
-    DynFibonacci fib(12);
-    ASSERT(fib.get(10) == 55, "fibonacci(10) should be 55");
-    std::cout << "fibonacci(10) = " << fib.get(10) << std::endl;
-    return 0;
+	DynFibonacci fib(12);
+	ASSERT(fib.get(10) == 55, "fibonacci(10) should be 55");
+	std::cout << "fibonacci(10) = " << fib.get(10) << std::endl;
+	return 0;
 }

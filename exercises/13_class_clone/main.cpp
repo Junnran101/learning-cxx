@@ -1,45 +1,57 @@
 #include "../exercise.h"
 
-// READ: å¤åˆ¶æ„é€ å‡½æ•° <https://zh.cppreference.com/w/cpp/language/copy_constructor>
+// READ: ¸´ÖÆ¹¹Ôìº¯Êı <https://zh.cppreference.com/w/cpp/language/copy_constructor>
 
 class DynFibonacci {
-    size_t *cache;
-    int cached;
+		size_t *cache;
+		int capacity;
+		int cached;
 
-public:
-    // TODO: å®ç°åŠ¨æ€è®¾ç½®å®¹é‡çš„æ„é€ å™¨
-    DynFibonacci(int capacity): cache(new ?), cached(?) {}
+	public:
+		// TODO: ÊµÏÖ¶¯Ì¬ÉèÖÃÈİÁ¿µÄ¹¹ÔìÆ÷
+		DynFibonacci(int capacity): cache(new size_t[capacity]), capacity(capacity), cached(2) {
+			cache[0] = 0;
+			cache[1] = 1;
+		}
 
-    // TODO: å®ç°å¤åˆ¶æ„é€ å™¨
-    DynFibonacci(DynFibonacci const &other) = delete;
+		// TODO: ÊµÏÖ¸´ÖÆ¹¹ÔìÆ÷
+		DynFibonacci(DynFibonacci const &other) = delete;
 
-    // TODO: å®ç°ææ„å™¨ï¼Œé‡Šæ”¾ç¼“å­˜ç©ºé—´
-    ~DynFibonacci();
+		// TODO: ÊµÏÖÎö¹¹Æ÷£¬ÊÍ·Å»º´æ¿Õ¼ä
+		~DynFibonacci() {
+			delete[] cache;
+		}
 
-    // TODO: å®ç°æ­£ç¡®çš„ç¼“å­˜ä¼˜åŒ–æ–æ³¢é‚£å¥‘è®¡ç®—
-    size_t get(int i) {
-        for (; false; ++cached) {
-            cache[cached] = cache[cached - 1] + cache[cached - 2];
-        }
-        return cache[i];
-    }
+		// TODO: ÊµÏÖÕıÈ·µÄ»º´æÓÅ»¯ì³²¨ÄÇÆõ¼ÆËã
+		size_t get(int i) {
+			if (i < cached) {
+				return cache[i];
+			}
 
-    // NOTICE: ä¸è¦ä¿®æ”¹è¿™ä¸ªæ–¹æ³•
-    // NOTICE: åå­—ç›¸åŒå‚æ•°ä¹Ÿç›¸åŒï¼Œä½† const ä¿®é¥°ä¸åŒçš„æ–¹æ³•æ˜¯ä¸€å¯¹é‡è½½æ–¹æ³•ï¼Œå¯ä»¥åŒæ—¶å­˜åœ¨
-    //         æœ¬è´¨ä¸Šï¼Œæ–¹æ³•æ˜¯éšè—äº† this å‚æ•°çš„å‡½æ•°
-    //         const ä¿®é¥°ä½œç”¨åœ¨ this ä¸Šï¼Œå› æ­¤å®ƒä»¬å®é™…ä¸Šå‚æ•°ä¸åŒ
-    size_t get(int i) const {
-        if (i <= cached) {
-            return cache[i];
-        }
-        ASSERT(false, "i out of range");
-    }
+			for (int j = cached; j <= i && j < capacity; ++j) {
+				cache[j] = cache[j - 1] + cache[j - 2];
+			}
+			cached = std::min(i + 1, capacity);
+
+			return cache[i];
+		}
+
+		// NOTICE: ²»ÒªĞŞ¸ÄÕâ¸ö·½·¨
+		// NOTICE: Ãû×ÖÏàÍ¬²ÎÊıÒ²ÏàÍ¬£¬µ« const ĞŞÊÎ²»Í¬µÄ·½·¨ÊÇÒ»¶ÔÖØÔØ·½·¨£¬¿ÉÒÔÍ¬Ê±´æÔÚ
+		//         ±¾ÖÊÉÏ£¬·½·¨ÊÇÒş²ØÁË this ²ÎÊıµÄº¯Êı
+		//         const ĞŞÊÎ×÷ÓÃÔÚ this ÉÏ£¬Òò´ËËüÃÇÊµ¼ÊÉÏ²ÎÊı²»Í¬
+		size_t get(int i) const {
+			if (i <= cached) {
+				return cache[i];
+			}
+			ASSERT(false, "i out of range");
+		}
 };
 
 int main(int argc, char **argv) {
-    DynFibonacci fib(12);
-    ASSERT(fib.get(10) == 55, "fibonacci(10) should be 55");
-    DynFibonacci const fib_ = fib;
-    ASSERT(fib_.get(10) == fib.get(10), "Object cloned");
-    return 0;
+	DynFibonacci fib(12);
+	ASSERT(fib.get(10) == 55, "fibonacci(10) should be 55");
+	DynFibonacci const &fib_ref = fib;
+	ASSERT(fib_ref.get(10) == fib.get(10), "Object cloned");
+	return 0;
 }

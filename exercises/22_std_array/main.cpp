@@ -1,28 +1,30 @@
-Ôªø#include "../exercise.h"
+#include "../exercise.h"
 #include <array>
 #include <cstring>
 
 // READ: std::array <https://zh.cppreference.com/w/cpp/container/array>
 
-// TODO: Â∞Ü‰∏ãÂàó `?` ÊõøÊç¢‰∏∫Ê≠£Á°ÆÁöÑ‰ª£Á†Å
+// TODO: Ω´œ¬¡– `?` ÃÊªªŒ™’˝»∑µƒ¥˙¬Î
 int main(int argc, char **argv) {
-    {
-        std::array<int, 5> arr{{1, 2, 3, 4, 5}};
-        ASSERT(arr.size() == ?, "Fill in the correct value.");
-        ASSERT(sizeof(arr) == ?, "Fill in the correct value.");
-        int ans[]{1, 2, 3, 4, 5};
-        ASSERT(std::memcmp(arr.?, ans, ?) == 0, "Fill in the correct values.");
-    }
-    {
-        std::array<double, 8> arr;
-        ASSERT(arr.size() == ?, "Fill in the correct value.");
-        ASSERT(sizeof(arr) == ?, "Fill in the correct value.");
-    }
-    {
-        std::array<char, 21> arr{"Hello, InfiniTensor!"};
-        ASSERT(arr.size() == ?, "Fill in the correct value.");
-        ASSERT(sizeof(arr) == ?, "Fill in the correct value.");
-        ASSERT(std::strcmp(arr.?, "Hello, InfiniTensor!") == 0, "Fill in the correct value.");
-    }
-    return 0;
+	{
+		std::array<int, 5> arr{{1, 2, 3, 4, 5}};
+		ASSERT(arr.size() == 5, "Fill in the correct value.");
+		ASSERT(sizeof(arr) == 5 * sizeof(int), "Fill in the correct value.");
+		int ans[] {1, 2, 3, 4, 5};
+		ASSERT(std::memcmp(arr.data(), ans, arr.size() * sizeof(int)) == 0, "Fill in the correct values.");
+	}
+
+	{
+		std::array<double, 8> arr;
+		ASSERT(arr.size() == 8, "Fill in the correct value.");
+		ASSERT(sizeof(arr) == 8 * sizeof(double), "Fill in the correct value.");
+	}
+
+	{
+		std::array<char, 21> arr{"Hello, InfiniTensor!"};
+		ASSERT(arr.size() == 21, "Fill in the correct value.");
+		ASSERT(sizeof(arr) == 21, "Fill in the correct value.");
+		ASSERT(std::strcmp(arr.data(), "Hello, InfiniTensor!") == 0, "Fill in the correct value.");
+	}
+	return 0;
 }

@@ -1,26 +1,29 @@
 #include "../exercise.h"
 
 // READ: <https://stackoverflow.com/questions/156767/whats-the-difference-between-an-argument-and-a-parameter>
-// THINK: å‚æ•°éƒ½æœ‰å“ªäº›ä¼ é€’æ–¹å¼ï¼Ÿå¦‚ä½•é€‰æ‹©ä¼ é€’æ–¹å¼ï¼Ÿ
+// THINK: ²ÎÊı¶¼ÓĞÄÄĞ©´«µİ·½Ê½£¿ÈçºÎÑ¡Ôñ´«µİ·½Ê½£¿
 
 void func(int);
 
-// TODO: ä¸ºä¸‹åˆ— ASSERT å¡«å†™æ­£ç¡®çš„å€¼
+// TODO: ÎªÏÂÁĞ ASSERT ÌîĞ´ÕıÈ·µÄÖµ
 int main(int argc, char **argv) {
-    auto arg = 99;
-    ASSERT(arg == ?, "arg should be ?");
-    std::cout << "befor func call: " << arg << std::endl;
-    func(arg);
-    ASSERT(arg == ?, "arg should be ?");
-    std::cout << "after func call: " << arg << std::endl;
-    return 0;
+	auto arg = 99;
+	ASSERT(arg == 99, "arg should be 99");
+	std::cout << "befor func call: " << arg << std::endl;
+	func(arg);
+	ASSERT(arg == 99, "arg should be 99");
+	std::cout << "after func call: " << arg << std::endl;
+	return 0;
 }
 
-// TODO: ä¸ºä¸‹åˆ— ASSERT å¡«å†™æ­£ç¡®çš„å€¼
+// funcº¯Êı£¬½ÓÊÜµÄÊÇargµÄÖµ×÷Îª²ÎÊı=>argÖµµÄÒ»¸ö¡°¸±±¾¡±param
+// funcÄÚ£¬¶Ô¸Ã¡°¸±±¾¡±paramµÄÈÎºÎ²Ù×÷£¬¶¼²»»áÓ°Ïìarc
+
+// TODO: ÎªÏÂÁĞ ASSERT ÌîĞ´ÕıÈ·µÄÖµ
 void func(int param) {
-    ASSERT(param == ?, "param should be ?");
-    std::cout << "befor add: " << param << std::endl;
-    param += 1;
-    ASSERT(param == ?, "param should be ?");
-    std::cout << "after add: " << param << std::endl;
+	ASSERT(param == 99, "param should be 99");
+	std::cout << "befor add: " << param << std::endl;
+	param += 1;
+	ASSERT(param == 100, "param should be 100");
+	std::cout << "after add: " << param << std::endl;
 }

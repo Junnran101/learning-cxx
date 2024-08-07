@@ -1,22 +1,34 @@
 #include "../exercise.h"
 
 struct Fibonacci {
-    unsigned long long cache[128];
-    int cached;
+	unsigned long long cache[128];
+	int cached;
 
-    // TODO: å®ç°æ­£ç¡®çš„ç¼“å­˜ä¼˜åŒ–æ–æ³¢é‚£å¥‘è®¡ç®—
-    unsigned long long get(int i) {
-        for (; false; ++cached) {
-            cache[cached] = cache[cached - 1] + cache[cached - 2];
-        }
-        return cache[i];
-    }
+	// TODO: ÊµÏÖÕıÈ·µÄ»º´æÓÅ»¯ì³²¨ÄÇÆõ¼ÆËã
+	unsigned long long get(int i) {
+
+		if (i < cached) {
+			return cache[i];
+		}
+
+		for (int j = cached; j <= i; ++j) {
+			cache[j] = cache[j - 1] + cache[j - 2];
+		}
+		return cache[i];
+	}
 };
 
+void init(Fibonacci &cache) {
+	cache.cache[0] = 0;
+	cache.cache[1] = 1;
+	cache.cached = 2;
+}
+
 int main(int argc, char **argv) {
-    // TODO: åˆå§‹åŒ–ç¼“å­˜ç»“æ„ä½“ï¼Œä½¿è®¡ç®—æ­£ç¡®
-    Fibonacci fib;
-    ASSERT(fib.get(10) == 55, "fibonacci(10) should be 55");
-    std::cout << "fibonacci(10) = " << fib.get(10) << std::endl;
-    return 0;
+	// TODO: ³õÊ¼»¯»º´æ½á¹¹Ìå£¬Ê¹¼ÆËãÕıÈ·
+	Fibonacci fib;
+	init(fib);
+	ASSERT(fib.get(10) == 55, "fibonacci(10) should be 55");
+	std::cout << "fibonacci(10) = " << fib.get(10) << std::endl;
+	return 0;
 }

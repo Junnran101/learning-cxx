@@ -1,37 +1,37 @@
-ï»¿#include "../exercise.h"
+#include "../exercise.h"
 #include <map>
+#include <string>
 
-// READ: `std::map` <https://zh.cppreference.com/w/cpp/container/map>
-// READ: `std::unordered_map` <https://zh.cppreference.com/w/cpp/container/unordered_map>
-
+// ¼ì²é¼üÊÇ·ñ´æÔÚÓÚ map ÖĞ
 template<class k, class v>
 bool key_exists(std::map<k, v> const &map, k const &key) {
-    // TODO: å®ç°å‡½æ•°
+	return map.find(key) != map.end();
 }
 
+// ÉèÖÃ map ÖĞµÄ¼üÖµ¶Ô£¬Èç¹û¼üÒÑ´æÔÚ£¬Ôò¸üĞÂÖµ
 template<class k, class v>
 void set(std::map<k, v> &map, k key, v value) {
-    // TODO: å®ç°å‡½æ•°
+	map[key] = value;
 }
 
-// ---- ä¸è¦ä¿®æ”¹ä»¥ä¸‹ä»£ç  ----
+// ---- ²»ÒªĞŞ¸ÄÒÔÏÂ´úÂë ----
 int main(int argc, char **argv) {
-    using namespace std::string_literals;
+	using namespace std::string_literals;
 
-    std::map<std::string, std::string> secrets;
+	std::map<std::string, std::string> secrets;
 
-    set(secrets, "hello"s, "world"s);
-    ASSERT(key_exists(secrets, "hello"s), "\"hello\" shoud be in `secrets`");
-    ASSERT(!key_exists(secrets, "foo"s), "\"foo\" shoud not be in `secrets`");
+	set(secrets, "hello"s, "world"s);
+	ASSERT(key_exists(secrets, "hello"s), "\"hello\" should be in `secrets`");
+	ASSERT(!key_exists(secrets, "foo"s), "\"foo\" should not be in `secrets`");
 
-    set(secrets, "foo"s, "bar"s);
-    set(secrets, "Infini"s, "Tensor"s);
-    ASSERT(secrets["hello"] == "world", "hello -> world");
-    ASSERT(secrets["foo"] == "bar", "foo -> bar");
-    ASSERT(secrets["Infini"] == "Tensor", "Infini -> Tensor");
+	set(secrets, "foo"s, "bar"s);
+	set(secrets, "Infini"s, "Tensor"s);
+	ASSERT(secrets["hello"] == "world", "hello -> world");
+	ASSERT(secrets["foo"] == "bar", "foo -> bar");
+	ASSERT(secrets["Infini"] == "Tensor", "Infini -> Tensor");
 
-    set(secrets, "hello"s, "developer"s);
-    ASSERT(secrets["hello"] == "developer", "hello -> developer");
+	set(secrets, "hello"s, "developer"s);
+	ASSERT(secrets["hello"] == "developer", "hello -> developer");
 
-    return 0;
+	return 0;
 }

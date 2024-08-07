@@ -1,69 +1,71 @@
 #include "../exercise.h"
 
-// READ: æ´¾ç”Ÿç±» <https://zh.cppreference.com/w/cpp/language/derived_class>
+// READ: ÅÉÉúÀà <https://zh.cppreference.com/w/cpp/language/derived_class>
 
 struct X {
-    int x;
+	int x;
 
-    X(int x_) : x(x_) {
-        std::cout << "X(" << x << ')' << std::endl;
-    }
-    X(X const &other) : x(other.x) {
-        std::cout << "X(X const &) : x(" << x << ')' << std::endl;
-    }
-    ~X() {
-        std::cout << "~X(" << x << ')' << std::endl;
-    }
+	X(int x_) : x(x_) {
+		std::cout << "X(" << x << ')' << std::endl;
+	}
+	X(X const &other) : x(other.x) {
+		std::cout << "X(X const &) : x(" << x << ')' << std::endl;
+	}
+	~X() {
+		std::cout << "~X(" << x << ')' << std::endl;
+	}
 };
+
 struct A {
-    int a;
+	int a;
 
-    A(int a_) : a(a_) {
-        std::cout << "A(" << a << ')' << std::endl;
-    }
-    A(A const &other) : A(other.a) {
-        std::cout << "A(A const &) : a(" << a << ')' << std::endl;
-    }
-    ~A() {
-        std::cout << "~A(" << a << ')' << std::endl;
-    }
+	A(int a_) : a(a_) {
+		std::cout << "A(" << a << ')' << std::endl;
+	}
+	A(A const &other) : A(other.a) {
+		std::cout << "A(A const &) : a(" << a << ')' << std::endl;
+	}
+	~A() {
+		std::cout << "~A(" << a << ')' << std::endl;
+	}
 };
-struct B : public A {
-    X x;
 
-    B(int b) : A(1), x(b) {
-        std::cout << "B(" << a << ", X(" << x.x << "))" << std::endl;
-    }
-    B(B const &other) : A(other.a), x(other.x) {
-        std::cout << "B(B const &) : A(" << a << "), x(X(" << x.x << "))" << std::endl;
-    }
-    ~B() {
-        std::cout << "~B(" << a << ", X(" << x.x << "))" << std::endl;
-    }
+struct B : public A {
+	X x;
+
+	B(int b) : A(1), x(b) {
+		std::cout << "B(" << a << ", X(" << x.x << "))" << std::endl;
+	}
+	B(B const &other) : A(other.a), x(other.x) {
+		std::cout << "B(B const &) : A(" << a << "), x(X(" << x.x << "))" << std::endl;
+	}
+	~B() {
+		std::cout << "~B(" << a << ", X(" << x.x << "))" << std::endl;
+	}
 };
 
 int main(int argc, char **argv) {
-    X x = X(1);
-    A a = A(2);
-    B b = B(3);
+	X x = X(1);
+	A a = A(2);
+	B b = B(3);
 
-    // TODO: è¡¥å…¨ä¸‰ä¸ªç±»å‹çš„å¤§å°
-    static_assert(sizeof(X) == ?, "There is an int in X");
-    static_assert(sizeof(A) == ?, "There is an int in A");
-    static_assert(sizeof(B) == ?, "B is an A with an X");
+	// TODO: ²¹È«Èı¸öÀàĞÍµÄ´óĞ¡
+	static_assert(sizeof(X) == sizeof(int), "There is an int in X");
+	static_assert(sizeof(A) == sizeof(int), "There is an int in A");
+	static_assert(sizeof(B) == sizeof(A) + sizeof(X), "B is an A with an X");
 
-    std::cout << std::endl
-              << "-------------------------" << std::endl
-              << std::endl;
+	std::cout << std::endl
+	          << "-------------------------" << std::endl
+	          << std::endl;
 
-    // è¿™æ˜¯ä¸å¯èƒ½çš„ï¼ŒA æ— æ³•æä¾› B å¢åŠ çš„æˆå‘˜å˜é‡çš„å€¼
-    // B ba = A(4);
+	// ÕâÊÇ²»¿ÉÄÜµÄ£¬A ÎŞ·¨Ìá¹© B Ôö¼ÓµÄ³ÉÔ±±äÁ¿µÄÖµ
+	// B ba = A(4);
 
-    // è¿™ä¹Ÿæ˜¯ä¸å¯èƒ½çš„ï¼Œå› ä¸º A æ˜¯ B çš„ä¸€éƒ¨åˆ†ï¼Œå°±å¥½åƒä¸å¯ä»¥æŠŠå¥—å¨ƒğŸª†çš„å¤–å±‚æ”¾è¿›å†…å±‚é‡Œã€‚
-    A ab = B(5);// ç„¶è€Œè¿™ä¸ªä»£ç å¯ä»¥ç¼–è¯‘å’Œè¿è¡Œï¼
-    // THINK: è§‚å¯Ÿæ‰“å°å‡ºçš„ä¿¡æ¯ï¼Œæ¨æµ‹æŠŠå¤§è±¡æ”¾è¿›å†°ç®±åˆ†å‡ æ­¥ï¼Ÿ
-    // THINK: è¿™æ ·çš„ä»£ç æ˜¯â€œå®‰å…¨â€çš„å—ï¼Ÿ
-    // NOTICE: çœŸå®åœºæ™¯ä¸­ä¸å¤ªå¯èƒ½å‡ºç°è¿™æ ·çš„ä»£ç 
+	// ÕâÒ²ÊÇ²»¿ÉÄÜµÄ£¬ÒòÎª A ÊÇ B µÄÒ»²¿·Ö£¬¾ÍºÃÏñ²»¿ÉÒÔ°ÑÌ×ÍŞ??µÄÍâ²ã·Å½øÄÚ²ãÀï¡£
+	A ab = B(5);// È»¶øÕâ¸ö´úÂë¿ÉÒÔ±àÒëºÍÔËĞĞ£¡
+	// THINK: ¹Û²ì´òÓ¡³öµÄĞÅÏ¢£¬ÍÆ²â°Ñ´óÏó·Å½ø±ùÏä·Ö¼¸²½£¿
+	// THINK: ÕâÑùµÄ´úÂëÊÇ¡°°²È«¡±µÄÂğ£¿
+	// NOTICE: ÕæÊµ³¡¾°ÖĞ²»Ì«¿ÉÄÜ³öÏÖÕâÑùµÄ´úÂë
 
-    return 0;
+	return 0;
 }
